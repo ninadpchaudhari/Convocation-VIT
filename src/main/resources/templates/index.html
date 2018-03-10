@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>VIT LinkedIn</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+        .top-buffer{
+            margin-top: 15px;
+        }
+        
+        /* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 0px 15px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+h4,h2,h3{
+font-family: Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+    </style>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="//platform.linkedin.com/in.js">
+        api_key: 77f4o977g1llon
+        authorize: false
+        onLoad: onLinkedInLoad
+    </script>
+
+    <script type="text/javascript">
+
+        // Setup an event listener to make an API call once auth is complete
+        function onLinkedInLoad() {
+            IN.Event.on(IN, "auth", getProfileData);
+            $('a[id*=li_ui_li_gen_]').css({ marginBottom: '20px' })
+                .html('<div class="text-center"><img src="/linkedin_signin_large.png" width="50%" border="0" class="mx-auto d-block" /></div>');
+        }
+
+        // Handle the successful return from the API call
+        function onSuccess(data) {
+            firstName = data.firstName;
+            lastName = data.lastName;
+            headline = data.headline;
+            linkedInId = data.id;
+            pictureUrl = data.pictureUrl;
+            summary = data.summary;
+            fullResponse = JSON.stringify(data);
+            console.log(data);
+
+            var jqxhr = $.post("linkedIn", {
+                firstName: firstName,
+                lastName: lastName,
+                headline: headline,
+                linkedInId: linkedInId,
+                pictureUrl: pictureUrl,
+                fullResponse: fullResponse
+            }, function (data) {
+                $("#linkedInButton").hide();
+                $("#infoCard").show();
+                $("#profileUrl").attr("src", pictureUrl);
+                $("#name").empty().append(firstName + " " + lastName);
+                $("#headline").empty().append(headline);
+                
+            })
+                .fail(function () {
+                    alert("error");
+                });
+        }
+
+        // Handle an error response from the API call
+        function onError(error) {
+            console.log(error);
+        }
+
+        // Use the API call wrapper to request the member's basic profile data
+        function getProfileData() {
+            IN.API.Raw("/people/~:(id,first-name,last-name,maiden-name,headline,location,industry,summary,picture-url,public-profile-url,api-standard-profile-request,email-address)").result(onSuccess).error(onError);
+        }
+        $(document).ready(function () {
+            $("#infoCard").hide();
+        })
+    </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+</head>
+
+<body>
+<header>
+
+</header>
+    <div class="container-fluid " style="background-color:#9165ab; height:5px"></div>
+    <div class="container top-buffer">
+        <div class="row d-flex justify-content-around">
+            <div class="col-2">
+                <img src="vitlogo.png" alt="Logo" class="img " style="width:100%">
+            </div>
+            <div class="col-5 my-auto" style="height:100%"> 
+                <h3 class="text-center my-auto">Welcome to Convocation 2018 !</h3>
+            </div>
+        </div>
+        
+        <div class="row ">
+        
+            <div class="col-12" style="margin-top:30vh">
+            
+                <p id="linkedInButton" class="text-center top-buffer mx-auto" >
+                    <script type="in/Login" data-height="200"></script>
+                </p>
+				
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+            <a href="/allSignIns" class="mx-auto">
+				<button class="btn btn-secondary ">Preview all Sign-Ins</button>
+				</a>
+            </div>
+            
+        </div>
+    </div>
+    <a href="linkedIn" class="float-right">
+        
+    </a>
+    <div class="container" id="infoCard">
+
+<div class="row justify-content-center">
+    <div class="col-6 d-flex justify-content-center ">
+        <div class="media ">
+            <img class="mr-3 align-self-center rounded" src="..." id="profileUrl" alt="Generic placeholder image" />
+            <div class="media-body">
+                <h5 class="mt-0" id="name">Media heading</h5>
+                <p id="headline"></p>
+
+                <p id="summary"></p>
+            </div>
+        </div>
+    </div>
+</div>
+        
+    </div>
+<footer class="footer">
+	<div class="container">
+	<div class="row d-flex justify-content-center">
+	
+	<span class="text-muted text-center" > Made with <i class="fas fa-heart" style="color:red"></i> by Ninad P.Chaudhari</span>
+	</div>
+	</div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

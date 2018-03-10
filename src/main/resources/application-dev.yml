@@ -1,0 +1,26 @@
+spring:
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+  http:
+    multipart:
+      max-file-size: 1024KB
+      max-request-size: 1024KB
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: create-drop 
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring-app
+    username: ${DB_USER}
+    password: ${DB_PASSWD}
+    platform: mysql
+    testWhileIdle: true
+    testOnBorrow: true
+    validationQuery: SELECT 1
+    properties:
+      hibernate:
+        use_sql_comments: true
+        format_sql: true
+  session:
+    store-type: jdbc
