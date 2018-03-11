@@ -9,8 +9,9 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: create-drop 
+      ddl-auto: update
   datasource:
+    initialize: true
     url: jdbc:mysql://localhost:3306/spring-app
     username: ${DB_USER}
     password: ${DB_PASSWD}
@@ -24,3 +25,5 @@ spring:
         format_sql: true
   session:
     store-type: jdbc
+adminUser : admin
+adminPassword : admin

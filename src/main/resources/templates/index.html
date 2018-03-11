@@ -7,46 +7,54 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <style>
-        .top-buffer{
+        .top-buffer {
             margin-top: 15px;
         }
-        
+
         /* Sticky footer styles
 -------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
-  background-color: #f5f5f5;
-}
+
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            /* Margin bottom by footer height */
+            margin-bottom: 60px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            line-height: 60px;
+            /* Vertically center the text there */
+            background-color: #f5f5f5;
+        }
 
 
-/* Custom page CSS
+        /* Custom page CSS
 -------------------------------------------------- */
-/* Not required for template or sticky footer method. */
 
-body > .container {
-  padding: 0px 15px 0;
-}
+        /* Not required for template or sticky footer method. */
 
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-h4,h2,h3{
-font-family: Roboto,"Helvetica Neue",Arial,sans-serif;
-}
+        body>.container {
+            padding: 0px 15px 0;
+        }
+
+        .footer>.container {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        h4,
+        h2,
+        h3 {
+            font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="//platform.linkedin.com/in.js">
@@ -61,7 +69,7 @@ font-family: Roboto,"Helvetica Neue",Arial,sans-serif;
         function onLinkedInLoad() {
             IN.Event.on(IN, "auth", getProfileData);
             $('a[id*=li_ui_li_gen_]').css({ marginBottom: '20px' })
-                .html('<div class="text-center"><img src="/linkedin_signin_large.png" width="50%" border="0" class="mx-auto d-block" /></div>');
+                .html('<div class="text-center"><img src="/images/linkedin_signin_large.png" width="50%" border="0" class="mx-auto d-block" /></div>');
         }
 
         // Handle the successful return from the API call
@@ -83,15 +91,22 @@ font-family: Roboto,"Helvetica Neue",Arial,sans-serif;
                 pictureUrl: pictureUrl,
                 fullResponse: fullResponse
             }, function (data) {
-                $("#linkedInButton").hide();
+                console.log(data);
+                if (data.certificate == "found") {
+                    $("#cert-avaliable").show();
+                    $("#cert-branches").empty().append(data.branches);
+                } else {
+                    $("#cert-not-avaliable").show();
+                }
+                $("#actionButtons").hide();
                 $("#infoCard").show();
                 $("#profileUrl").attr("src", pictureUrl);
                 $("#name").empty().append(firstName + " " + lastName);
                 $("#headline").empty().append(headline);
-                
+
             })
                 .fail(function () {
-                    alert("error");
+                    alert("error in doing AJAX to server");
                 });
         }
 
@@ -106,71 +121,82 @@ font-family: Roboto,"Helvetica Neue",Arial,sans-serif;
         }
         $(document).ready(function () {
             $("#infoCard").hide();
+            $("#cert-avaliable").hide();
+            $("#cert-not-avaliable").hide();
         })
     </script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
 
 <body>
-<header>
+    <header>
 
-</header>
+    </header>
     <div class="container-fluid " style="background-color:#9165ab; height:5px"></div>
     <div class="container top-buffer">
         <div class="row d-flex justify-content-around">
-            <div class="col-2">
-                <img src="vitlogo.png" alt="Logo" class="img " style="width:100%">
+            <div class="col-md-2 col-sm-4">
+                <a href="/">
+                    <img src="/images/vitlogo.png" alt="Logo" class="img " style="height:5vh">
+                </a>
+
             </div>
-            <div class="col-5 my-auto" style="height:100%"> 
+            <div class="col-5 my-auto" style="height:100%">
                 <h3 class="text-center my-auto">Welcome to Convocation 2018 !</h3>
             </div>
         </div>
-        
-        <div class="row ">
-        
+
+        <div class="row " id="actionButtons">
+
             <div class="col-12" style="margin-top:30vh">
-            
-                <p id="linkedInButton" class="text-center top-buffer mx-auto" >
+
+                <p class="text-center top-buffer mx-auto">
                     <script type="in/Login" data-height="200"></script>
                 </p>
-				
+
             </div>
             <div class="col-12 d-flex justify-content-center">
-            <a href="/allSignIns" class="mx-auto">
-				<button class="btn btn-secondary ">Preview all Sign-Ins</button>
-				</a>
+                <a href="/allSignIns" class="mx-auto">
+                    <button class="btn btn-secondary ">Preview all Sign-Ins</button>
+                </a>
             </div>
-            
+
         </div>
     </div>
     <a href="linkedIn" class="float-right">
-        
+
     </a>
     <div class="container" id="infoCard">
 
-<div class="row justify-content-center">
-    <div class="col-6 d-flex justify-content-center ">
-        <div class="media ">
-            <img class="mr-3 align-self-center rounded" src="..." id="profileUrl" alt="Generic placeholder image" />
-            <div class="media-body">
-                <h5 class="mt-0" id="name">Media heading</h5>
-                <p id="headline"></p>
+        <div class="row justify-content-center top-buffer" style="margin-top:25vh">
+            <div class="col-md-6 d-flex justify-content-center ">
+                <div class="media ">
+                    <img class="mr-3 align-self-top rounded" src="..." id="profileUrl" alt="Generic placeholder image" />
+                    <div class="media-body">
+                        <h5 class="mt-0" id="name">Media heading</h5>
+                        <p id="headline"></p>
+                        <div id="cert-avaliable">
+                            <span class="badge badge-success">Certificate Available</span>
+                            <span class="badge badge-info" id="cert-branches">Info</span>
+                        </div>
 
-                <p id="summary"></p>
+                        <span class="badge badge-warning" id="cert-not-avaliable">Certificate Not Available</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+
+                <span class="text-muted text-center"> Made with
+                    <i class="fas fa-heart" style="color:red"></i> by <a href="https://ninadtech.com" >Ninad P.Chaudhari</a></span>
             </div>
         </div>
-    </div>
-</div>
-        
-    </div>
-<footer class="footer">
-	<div class="container">
-	<div class="row d-flex justify-content-center">
-	
-	<span class="text-muted text-center" > Made with <i class="fas fa-heart" style="color:red"></i> by Ninad P.Chaudhari</span>
-	</div>
-	</div>
-</footer>
+    </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"

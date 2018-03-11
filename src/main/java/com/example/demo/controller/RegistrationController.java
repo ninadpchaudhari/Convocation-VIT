@@ -34,4 +34,8 @@ public class RegistrationController {
 		return mv;
 	}
 	
+	@GetMapping(value="/login")
+	public String renderLogin() {
+        return "login";
+	}
 }

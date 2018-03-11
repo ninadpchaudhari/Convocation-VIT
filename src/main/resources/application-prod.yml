@@ -6,7 +6,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update 
+      ddl-auto: validate 
   datasource:
     url: jdbc:mysql://35.200.199.28:3306/spring-app
     username: ${DB_USER}

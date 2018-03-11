@@ -18,26 +18,26 @@
 <body>
     <div class="container-fluid " style="background-color:#9165ab; height:5px"></div>
     <div class="container buffer">
-            <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Full Request</th>
-                        
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr  th:each="profile,stats : ${profiles}">
-                        <th scope="row" th:text="${stats.count}">1</th>
-                        <td th:text="${profile.firstName}">Mark</td>
-                        <td th:text="${profile.fullProfile}">Otto</td>
-                        
-                      </tr>
-                      
-                    </tbody>
-                  </table>
-        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Full Request</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="profile,stats : ${profiles}">
+                    <th scope="row" th:text="${stats.count}">1</th>
+                    <td th:text="${profile.firstName}">Mark</td>
+                    <td th:text="${profile.fullProfile}">Otto</td>
+
+                </tr>
+
+            </tbody>
+        </table>
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
