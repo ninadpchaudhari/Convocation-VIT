@@ -1,4 +1,7 @@
 spring:
+  thymeleaf:
+    cache: true
+    mode: LEGACYHTML5
   http:
     multipart:
       max-file-size: 1024KB
