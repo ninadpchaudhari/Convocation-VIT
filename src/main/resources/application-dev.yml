@@ -27,3 +27,4 @@ spring:
     store-type: jdbc
 adminUser : admin
 adminPassword : admin
+redirect_url: http://localhost:8080/linkedInCallback

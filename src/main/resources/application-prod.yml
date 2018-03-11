@@ -24,3 +24,4 @@ spring:
         format_sql: true
   session:
     store-type: jdbc
+redirect_url: http://vitlinkedin.us-east-2.elasticbeanstalk.com/linkedInCallback

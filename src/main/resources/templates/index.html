@@ -124,6 +124,7 @@
             $("#cert-avaliable").hide();
             $("#cert-not-avaliable").hide();
         })
+        
     </script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
@@ -159,6 +160,19 @@
                 <a href="/allSignIns" class="mx-auto">
                     <button class="btn btn-secondary ">Preview all Sign-Ins</button>
                 </a>
+            </div>
+            
+            <div class="col-12 d-flex justify-content-center">
+            <form action="https://www.linkedin.com/oauth/v2/authorization">
+            <input type="hidden" name="response_type" value="code"/>
+            <input type="hidden" name="client_id" value="77f4o977g1llon"/>
+            <input type="hidden" name="redirect_uri" th:value="${redirect_url}"/>
+            <input type="hidden" name="state" th:value="${state}"/>
+            <input type="hidden" name="scope" value="r_fullprofile r_emailaddress w_share"/>
+            <input type="submit" class="btn btn-secondary"/>
+            </form>
+            
+                
             </div>
 
         </div>
