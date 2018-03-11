@@ -22,15 +22,17 @@ public class LinkedInLoginController {
 	
 	@GetMapping(value="/linkedInCallback")
 	public String linkedInServerCallback(
-			@RequestParam(name="code", required=true) String code,
-			@RequestParam(name="state", required=true) String state,
+			@RequestParam(name="code", required=false, defaultValue="") String code,
+			@RequestParam(name="state", required=false, defaultValue="") String state,
 			@RequestParam(name="error", required=false,defaultValue="") String error,
 			@RequestParam(name="error_description", required=false,defaultValue="") String error_description,
 			HttpServletRequest request
 			) {
 		
-		if(error.equals("")) {
+		if(!error.equals("")) {
 			//Error orccured
+			System.out.println("LinkedIn login error occured");
+			System.out.println(error_description);
 			return error_description;
 		}
 		String hash = (String)request.getSession().getAttribute("state");
@@ -41,7 +43,9 @@ public class LinkedInLoginController {
 			System.out.println("hash is not equal to state!");
 			return "STATE does not match";
 		}
-		return "";
+		
+		//All Well -- Now use code to get the token
+		return "Getting token";
 	}
 	
 	
